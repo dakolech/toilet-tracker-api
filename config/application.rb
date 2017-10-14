@@ -36,5 +36,9 @@ module ToiletTrackerApi
     Slack.configure do |config|
       config.token = Rails.application.secrets['slack_api_key']
     end
+    Giphy::Configuration.configure do |config|
+      # config.version = THE_API_VERSION
+      config.api_key = Rails.application.secrets['giphy_api_key']
+    end
   end
 end
