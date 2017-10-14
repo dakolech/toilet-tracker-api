@@ -33,5 +33,8 @@ module ToiletTrackerApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    Slack.configure do |config|
+      config.token = 'xoxb-256417289810-JRSu3pU3B6fgTjKjQrAjutnw'
+    end
   end
 end
