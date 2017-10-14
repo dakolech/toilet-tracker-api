@@ -34,7 +34,11 @@ module ToiletTrackerApi
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     Slack.configure do |config|
-      config.token = 'xoxb-256417289810-JRSu3pU3B6fgTjKjQrAjutnw'
+      config.token = Rails.application.secrets['slack_api_key']
+    end
+    Giphy::Configuration.configure do |config|
+      # config.version = THE_API_VERSION
+      config.api_key = Rails.application.secrets['giphy_api_key']
     end
   end
 end
