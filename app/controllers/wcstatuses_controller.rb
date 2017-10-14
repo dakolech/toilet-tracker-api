@@ -14,9 +14,7 @@ class WcstatusesController < ApplicationController
       all_members.concat(response.members)
     end
 
-    puts all_members
-
-    client = Slack::Web::Client.new
+    puts all_members.inspect
 
     client.chat_postMessage(channel: '#devcamp-hackathon', text: 'Ktos zajął toaletę!', as_user: true)
     wcstatus = Wcstatus.create(params[:wctatus])
