@@ -1,7 +1,6 @@
 class WcstatusesController < ApplicationController
 
   def index
-    # Wcstatus.create(is_busy: true)
-    Wcstatus.all
+    render json: Wcstatus.all
   end
 end
