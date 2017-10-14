@@ -5,7 +5,7 @@ class WcstatusesController < ApplicationController
   end
 
   def create
-    puts params[:wctatus].inspect
+    puts params.inspect
     wcstatus = Wcstatus.create(params[:wctatus])
     puts wcstatus.is_busy
     render json: wcstatus
