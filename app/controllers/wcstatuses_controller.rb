@@ -8,15 +8,19 @@ class WcstatusesController < ApplicationController
     client = Slack::Web::Client.new
     puts params.inspect
 
-    all_members = []
+    # all_members = []
 
-    client.users_list(presence: true, limit: 10) do |response|
-      all_members.concat(response.members)
-    end
+    # client.users_list(presence: true, limit: 10) do |response|
+    #   all_members.concat(response.members)
+    # end
 
-    puts all_members.inspect
+    # puts all_members.inspect
 
-    client.chat_postMessage(channel: '#devcamp-hackathon', text: 'Ktos zajął toaletę!', as_user: true)
+    # occupant = ['przemekf', 'daniel', `franek`].sample
+    occupant = ['franek'].sample
+
+    client.chat_postMessage(channel: '#devcamp-hackathon', text: "<@#{occupant}> zajął toaletę!", as_user: true)
+
     wcstatus = Wcstatus.create(params[:wctatus])
     puts wcstatus.is_busy
     render json: wcstatus
