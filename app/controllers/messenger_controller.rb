@@ -28,8 +28,7 @@ class MessengerController < Messenger::MessengerController
 
     if fb_params.first_entry.callback.postback?
       if fb_params.entries.first.messagings.first.callback.payload === 'wantToSeeToiletTrue'
-        isOcupied = true
-        if isOcupied
+        if Wcstatus.last.is_busy
           Messenger::Client.send(
             Messenger::Request.new(
               Messenger::Elements::Text.new(text: 'Aktualnie łazienka jest zajęta'),
