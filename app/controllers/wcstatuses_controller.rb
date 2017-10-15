@@ -13,12 +13,13 @@ class WcstatusesController < ApplicationController
 
   def create
     client = Slack::Web::Client.new
-    puts params.inspect
-    # binding.pry
     occupant = ['przemekf', 'daniel', 'franek'].sample
 
-    # client.chat_postMessage(channel: '#devcamp-hackathon', text: "<@#{occupant}> zajął toaletę!", as_user: true)
-    client.chat_postMessage(channel: '#devcamp-hackathon', text: "Ktos zajął toaletę!", as_user: true)
+    if params[:data][:attributes]['is-busy']
+      client.chat_postMessage(channel: '#devcamp-hackathon', text: "Ktos zajął toaletę!", as_user: true)
+    elsif
+      client.chat_postMessage(channel: '#devcamp-hackathon', text: "Toaleta się zwolniła!", as_user: true)
+    end
     # gif = Giphy.search('funny cat', {limit: 1, offset: 25}).first.embed_url.to_s
     # client.chat_postMessage(channel: '#devcamp-hackathon', text: gif, as_user: true) if occupant == 'franek'
     wcstatus = Wcstatus.create({is_busy: params[:data][:attributes]['is-busy']})
@@ -36,7 +37,7 @@ class WcstatusesController < ApplicationController
         entrance_time = wc_status.created_at
       elsif
         leave_time = wc_status.created_at
-        busy_time = busy_time + (leave_time - entrance_time)
+        busy_time = busy_time + (leave_time - entrance_time || Time.now)
       end
     end
     (busy_time/60).to_i
