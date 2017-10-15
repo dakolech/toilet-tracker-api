@@ -21,6 +21,13 @@ gem 'active_model_serializers', '~> 0.10.0'# Use Redis adapter to run Action Cab
 gem 'giphy'
 gem 'messenger-ruby'
 
+gem 'eventmachine'
+gem 'faye-websocket'
+
+gem 'slack-ruby-bot-server'
+gem 'otr-activerecord'
+gem 'cursor_pagination'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
