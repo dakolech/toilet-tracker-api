@@ -7,22 +7,13 @@ class WcstatusesController < ApplicationController
   def create
     client = Slack::Web::Client.new
     puts params.inspect
-
-    # all_members = []
-
-    # client.users_list(presence: true, limit: 10) do |response|
-    #   all_members.concat(response.members)
-    # end
-
-    # puts all_members.inspect
-
-    # occupant = ['przemekf', 'daniel', `franek`].sample
-    occupant = ['franek'].sample
+    # binding.pry
+    occupant = ['przemekf', 'daniel', 'franek'].sample
 
     client.chat_postMessage(channel: '#devcamp-hackathon', text: "<@#{occupant}> zajął toaletę!", as_user: true)
     gif = Giphy.search('funny cat', {limit: 1, offset: 25}).first.embed_url.to_s
-    client.chat_postMessage(channel: '#devcamp-hackathon', text: gif, as_user: true)
-    wcstatus = Wcstatus.create(params[:wctatus])
+    client.chat_postMessage(channel: '#devcamp-hackathon', text: gif, as_user: true) if occupant == 'franek'
+    wcstatus = Wcstatus.create({is_busy: params[:data][:attributes]['is-busy']})
     puts wcstatus.is_busy
     render json: wcstatus
   end
