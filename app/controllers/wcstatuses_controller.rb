@@ -12,16 +12,18 @@ class WcstatusesController < ApplicationController
   end
 
   def create
-    client = Slack::Web::Client.new
-    occupant = ['przemekf', 'daniel', 'franek'].sample
+    if Rails.application.secrets['slack_api_key'] != ''
+      client = Slack::Web::Client.new
+      occupant = ['przemekf', 'daniel', 'franek'].sample
 
-    if params[:data][:attributes]['is-busy']
-      client.chat_postMessage(channel: '#devcamp-hackathon', text: "Ktos zajął toaletę!", as_user: true)
-    elsif
-      client.chat_postMessage(channel: '#devcamp-hackathon', text: "Toaleta się zwolniła!", as_user: true)
+      if params[:data][:attributes]['is-busy']
+        client.chat_postMessage(channel: '#devcamp-hackathon', text: "Ktos zajął toaletę!", as_user: true)
+      elsif
+        client.chat_postMessage(channel: '#devcamp-hackathon', text: "Toaleta się zwolniła!", as_user: true)
+      end
+      gif = Giphy.search('funny cat', {limit: 1, offset: 25}).first.embed_url.to_s
+      client.chat_postMessage(channel: '#devcamp-hackathon', text: gif, as_user: true) if occupant == 'franek'
     end
-    # gif = Giphy.search('funny cat', {limit: 1, offset: 25}).first.embed_url.to_s
-    # client.chat_postMessage(channel: '#devcamp-hackathon', text: gif, as_user: true) if occupant == 'franek'
     wcstatus = Wcstatus.create({is_busy: params[:data][:attributes]['is-busy']})
     render json: wcstatus
   end
