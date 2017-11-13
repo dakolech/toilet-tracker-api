@@ -37,7 +37,7 @@ class WcstatusesController < ApplicationController
         entrance_time = wc_status.created_at
       elsif
         leave_time = wc_status.created_at
-        busy_time = busy_time + (leave_time - entrance_time || Time.now)
+        busy_time = busy_time + ((leave_time || Time.now) - (entrance_time || Time.now))
       end
     end
     (busy_time/60).to_i
