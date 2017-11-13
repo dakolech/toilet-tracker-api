@@ -12,7 +12,7 @@ class WcstatusesController < ApplicationController
   end
 
   def create
-    if Rails.application.secrets['slack_api_key'] != ''
+    if ENV['slack_api_key'] != ''
       client = Slack::Web::Client.new
       occupant = ['przemekf', 'daniel', 'franek'].sample
 

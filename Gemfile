@@ -33,6 +33,7 @@ gem 'cursor_pagination'
 gem 'rack-cors'
 gem 'slack-ruby-client'
 gem 'annotate'
+gem 'figaro'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
